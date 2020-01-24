@@ -6,11 +6,16 @@ resource "aws_codecommit_repository" "SiteRepo" {
 }
 
 resource "aws_s3_bucket" "PublicBucket" {
-  bucket = "${var.site_name}.${var.domain_extension}"
-  acl    = "public-read"
-  policy = templatefile("${path.module}/public-bucket-policy.tmpl", { bucket_name = "${var.site_name}.${var.domain_extension}", user_arn = data.aws_caller_identity.CallerID.arn })
-  region = var.region
+  bucket        = "${var.site_name}.${var.domain_extension}"
+  acl           = "public-read"
+  force_destroy = true
+  region        = var.region
   website {
     index_document = "index.html"
   }
+}
+
+resource "aws_s3_bucket_policy" "PublicBucket" {
+  bucket = aws_s3_bucket.PublicBucket.id
+  policy = templatefile("${path.module}/public-bucket-policy.tmpl", { bucket_name = "${var.site_name}.${var.domain_extension}", user_arn = data.aws_caller_identity.CallerID.arn })
 }

@@ -19,3 +19,12 @@ resource "aws_s3_bucket_policy" "PublicBucket" {
   bucket = aws_s3_bucket.PublicBucket.id
   policy = templatefile("${path.module}/public-bucket-policy.tmpl", { bucket_name = "${var.site_name}.${var.domain_extension}", user_arn = data.aws_caller_identity.CallerID.arn })
 }
+
+resource "aws_s3_bucket" "WWWBucket" {
+  bucket        = "www.${var.site_name}.${var.domain_extension}"
+  force_destroy = true
+  region        = var.region
+  website {
+    redirect_all_requests_to = aws_s3_bucket.PublicBucket.id
+  }
+}

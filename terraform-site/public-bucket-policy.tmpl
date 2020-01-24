@@ -12,7 +12,7 @@
       "Sid"       = "BootstrapCRUD"
       "Action"    = "*"
       "Effect"    = "Allow"
-      "Principal" = {"AWS" = "${user}" }
+      "Principal" = {"AWS" = "${user_arn}" }
       "Resource"  = "arn:aws:s3:::${bucket_name}/*"
     }
   ]

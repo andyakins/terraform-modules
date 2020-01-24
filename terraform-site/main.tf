@@ -8,10 +8,7 @@ resource "aws_codecommit_repository" "SiteRepo" {
 resource "aws_s3_bucket" "PublicBucket" {
   bucket = "${var.site_name}.${var.domain_extension}"
   acl    = "public-read"
-  policy = templatefile("${path.module}/public-bucket-policy.tmpl", {
-    bucket_name = "${var.site_name}.${var.domain_extension}",
-    user        = data.aws_caller_identity.CallerID.arn
-  })
+  policy = templatefile("${path.module}/public-bucket-policy.tmpl", { bucket_name = "${var.site_name}.${var.domain_extension}", user_arn = data.aws_caller_identity.CallerID.arn })
   region = var.region
   website {
     index_document = "index.html"

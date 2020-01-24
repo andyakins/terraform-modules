@@ -31,5 +31,7 @@ resource "aws_s3_bucket" "WWWBucket" {
 }
 
 resource "aws_route53_zone" "DomainDNS" {
-  name = "${var.site_name}.${var.domain_extension}."
+  name          = "${var.site_name}.${var.domain_extension}."
+  comment       = "Hosted zone created for ${var.site_name}.${var.domain_extension} site."
+  force_destroy = true
 }

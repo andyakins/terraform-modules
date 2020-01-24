@@ -4,7 +4,7 @@ resource "aws_codecommit_repository" "SiteRepo" {
 }
 
 resource "aws_s3_bucket" "PublicBucket" {
-  bucket = "${var.name}.com"
+  bucket = "${var.site_name}.com"
   acl    = "public-read"
   policy = templatefile("${path.module}/public-bucket-policy.tmpl", { site_name = var.site_name })
   website {

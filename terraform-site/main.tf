@@ -7,6 +7,7 @@ resource "aws_s3_bucket" "PublicBucket" {
   bucket = "${var.site_name}.${var.domain_type}"
   acl    = "public-read"
   policy = templatefile("${path.module}/public-bucket-policy.tmpl", { bucket_name = "${var.site_name}.${var.domain_type}" })
+  region = var.region
   website {
     index_document = "index.html"
   }

@@ -29,3 +29,7 @@ resource "aws_s3_bucket" "WWWBucket" {
     redirect_all_requests_to = aws_s3_bucket.PublicBucket.id
   }
 }
+
+resource "aws_route53_zone" "DomainDNS" {
+  name = "${var.site_name}.${var.domain_extension}."
+}

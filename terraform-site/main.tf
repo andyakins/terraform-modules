@@ -22,6 +22,7 @@ resource "aws_s3_bucket_policy" "PublicBucket" {
 
 resource "aws_s3_bucket" "WWWBucket" {
   bucket        = "www.${var.site_name}.${var.domain_extension}"
+  acl           = "public-read"
   force_destroy = true
   region        = var.region
   website {
